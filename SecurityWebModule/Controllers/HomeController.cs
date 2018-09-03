@@ -62,7 +62,19 @@ namespace SecurityWebModule.Controllers
             }
             return PartialView("_Edit",model);
         }
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            filterContext.ExceptionHandled = true;
 
+            // Redirect on error:
+            filterContext.Result = RedirectToAction("Index", "Error");
+
+            // OR set the result without redirection:
+            filterContext.Result = new ViewResult
+            {
+                ViewName = "~/Views/Error/Index.cshtml"
+            };
+        }
 
 
     }

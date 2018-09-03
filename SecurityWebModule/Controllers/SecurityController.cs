@@ -1,4 +1,5 @@
-﻿using SecurityWebModule.Models;
+﻿using NLog;
+using SecurityWebModule.Models;
 using SecurityWebModule.Service;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace SecurityWebModule.Controllers
     {
 
         private SecurityService securityService;
+        Logger logger = LogManager.GetCurrentClassLogger();
         public SecurityController()
         {           
             this.securityService = new SecurityService();
@@ -38,7 +40,19 @@ namespace SecurityWebModule.Controllers
             }
             return RedirectToAction("Index");
         }
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            filterContext.ExceptionHandled = true;
 
-      
+            // Redirect on error:
+            filterContext.Result = RedirectToAction("Index", "Error");
+
+            // OR set the result without redirection:
+            filterContext.Result = new ViewResult
+            {
+                ViewName = "~/Views/Error/Index.cshtml"
+            };
+        }
+
     }
 }
