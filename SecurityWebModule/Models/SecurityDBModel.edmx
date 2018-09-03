@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SecurityDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_Locates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsPublic" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Security">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LocatesId" Type="int" Nullable="false" />
+          <Property Name="SecurityCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="ISIN" Type="nvarchar" MaxLength="20" />
+          <Property Name="Sedol" Type="nvarchar" MaxLength="20" />
+          <Property Name="Cusip" Type="nvarchar" MaxLength="20" />
+          <Property Name="RIC" Type="nvarchar" MaxLength="20" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tbl_Security_tbl_Locates">
+          <End Role="tbl_Locates" Type="Self.tbl_Locates" Multiplicity="1" />
+          <End Role="tbl_Security" Type="Self.tbl_Security" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Locates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Security">
+              <PropertyRef Name="LocatesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SecurityDBModelStoreContainer">
+          <EntitySet Name="tbl_Locates" EntityType="Self.tbl_Locates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Security" EntityType="Self.tbl_Security" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbl_Security_tbl_Locates" Association="Self.FK_tbl_Security_tbl_Locates">
+            <End Role="tbl_Locates" EntitySet="tbl_Locates" />
+            <End Role="tbl_Security" EntitySet="tbl_Security" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SecurityDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_Locates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tbl_Security" Relationship="Self.FK_tbl_Security_tbl_Locates" FromRole="tbl_Locates" ToRole="tbl_Security" />
+        </EntityType>
+        <EntityType Name="tbl_Security">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocatesId" Type="Int32" Nullable="false" />
+          <Property Name="SecurityCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ISIN" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Sedol" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Cusip" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tbl_Locates" Relationship="Self.FK_tbl_Security_tbl_Locates" FromRole="tbl_Security" ToRole="tbl_Locates" />
+        </EntityType>
+        <Association Name="FK_tbl_Security_tbl_Locates">
+          <End Role="tbl_Locates" Type="Self.tbl_Locates" Multiplicity="1" />
+          <End Role="tbl_Security" Type="Self.tbl_Security" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Locates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Security">
+              <PropertyRef Name="LocatesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SecurityDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_Locates" EntityType="Self.tbl_Locates" />
+          <EntitySet Name="tbl_Security" EntityType="Self.tbl_Security" />
+          <AssociationSet Name="FK_tbl_Security_tbl_Locates" Association="Self.FK_tbl_Security_tbl_Locates">
+            <End Role="tbl_Locates" EntitySet="tbl_Locates" />
+            <End Role="tbl_Security" EntitySet="tbl_Security" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SecurityDBModelStoreContainer" CdmEntityContainer="SecurityDBEntities">
+          <EntitySetMapping Name="tbl_Locates">
+            <EntityTypeMapping TypeName="SecurityDBModel.tbl_Locates">
+              <MappingFragment StoreEntitySet="tbl_Locates">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Security">
+            <EntityTypeMapping TypeName="SecurityDBModel.tbl_Security">
+              <MappingFragment StoreEntitySet="tbl_Security">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LocatesId" ColumnName="LocatesId" />
+                <ScalarProperty Name="SecurityCode" ColumnName="SecurityCode" />
+                <ScalarProperty Name="ISIN" ColumnName="ISIN" />
+                <ScalarProperty Name="Sedol" ColumnName="Sedol" />
+                <ScalarProperty Name="Cusip" ColumnName="Cusip" />
+                <ScalarProperty Name="RIC" ColumnName="RIC" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

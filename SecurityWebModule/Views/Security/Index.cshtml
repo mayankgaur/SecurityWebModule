@@ -1,0 +1,67 @@
+﻿@model List<SecurityWebModule.Models.SecurityModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Add/Edit Securities for List</h2>
+<table id="security">
+    <tr><th>Security Code</th><th>Description</th><th>ISIN</th><th>Sedol</th><th>Cusip</th><th>RIC</th><th><a href="#">+</a></th></tr>
+    
+    @foreach (var item in Model)
+    {
+           <tr><td>@item.SecurityCode</td><td>@item.Description</td><td>@item.ISIN</td><td>@item.Sedol</td><td>@item.Cusip</td><td>@item.RIC</td><td><a href="#">-</a></td></tr>     
+    }
+    </table>
+<script>
+    $(document).ready(function () {
+       
+        var tdStart = "<td>";
+        var tdEnd = "</td>";
+
+        var mainRow = "<tr>";
+
+        mainRow += tdStart;
+        var secCode = "<input type='text'/>";
+        mainRow += secCode;
+        mainRow += tdEnd;
+
+        mainRow += tdStart;
+        var desc = "<input type='text'/>";
+        mainRow += desc;
+        mainRow += tdEnd;
+
+
+        mainRow += tdStart;
+        var ISIN = "<input type='text'/>";
+        mainRow += ISIN;
+        mainRow += tdEnd;
+
+
+        mainRow += tdStart;
+        var sedol = "<input type='text'/>";
+        mainRow += sedol;
+        mainRow += tdEnd;
+
+        mainRow += tdStart;
+        var Cusip = "<input type='text'/>";
+        mainRow += Cusip;
+        mainRow += tdEnd;
+
+        mainRow += tdStart;
+        var RIC = "<input type='text'/>";
+        mainRow += RIC;
+        mainRow += tdEnd;
+
+        mainRow += tdStart;
+        var deleterow = "<a href='#''>-</a>";
+        mainRow += deleterow;
+        mainRow += tdEnd;
+
+        var mainRowEnd = "</tr>";
+        mainRow += mainRowEnd;
+        $("#security").html(mainRow);
+
+    });
+</script>
+
+
